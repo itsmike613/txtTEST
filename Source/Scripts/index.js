@@ -45,23 +45,25 @@ async function loadFileContent(filename) {
         listItemsContainer.innerHTML = ''; // Clear previous list
 
         contentArray.forEach((item, index) => {
+            // Using standard Bootstrap list-group-item and d-flex utilities
             const li = document.createElement('li');
-            li.className = 'list-group-item-minimal';
+            li.className = 'list-group-item d-flex align-items-center justify-content-between py-2';
             li.innerHTML = `
-                        <div class="d-flex align-items-center">
-                            <span class="text-muted fw-bold me-2">${index + 1}.</span>
-                            <span class="item-text">${item}</span>
-                        </div>
-                        <button class="btn btn-sm btn-light p-1 copy-item-btn" data-item-text="${item.replace(/"/g, '&quot;')}" title="Copy Item">
-                            <i class="ph ph-copy-simple"></i>
-                        </button>
-                    `;
+                                <div class="d-flex align-items-center">
+                                    <span class="text-muted fw-bold me-3">${index + 1}.</span>
+                                    <span class="item-text">${item}</span>
+                                </div>
+                                <button class="btn btn-sm btn-light p-1 copy-item-btn" data-item-text="${item.replace(/"/g, '&quot;')}" title="Copy Item">
+                                    <i class="ph ph-copy-simple"></i>
+                                </button>
+                            `;
             listItemsContainer.appendChild(li);
         });
 
         // Attach individual copy button listeners
         document.querySelectorAll('.copy-item-btn').forEach(button => {
-            button.onclick = (e) => copyToClipboard(e.currentTarget.dataset.item - text, 'Item copied!');
+            // Corrected access to data-item-text
+            button.onclick = (e) => copyToClipboard(e.currentTarget.dataset.itemText, 'Item copied!');
         });
 
         card.dataset.currentContent = contentArray.join('\n'); // Store content for global copy
@@ -118,11 +120,12 @@ function renderBlankCard(message = 'No file content loaded.', isError = false) {
     dropdownButton.textContent = 'Select a File';
     cardTitle.innerHTML = isError ? `<span class="text-danger">Error / Note</span>` : 'Welcome';
     itemCountSpan.textContent = '0 items';
+    // Using standard Bootstrap list-group-item
     listItemsContainer.innerHTML = `
-                <li class="list-group-item-minimal text-muted fst-italic">
-                    ${message}
-                </li>
-            `;
+                        <li class="list-group-item text-muted fst-italic">
+                            ${message}
+                        </li>
+                    `;
     card.dataset.currentContent = '';
 }
 
