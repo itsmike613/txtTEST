@@ -53,7 +53,7 @@ async function loadFileContent(filename) {
                             <span class="item-text">${item}</span>
                         </div>
                         <button class="btn btn-sm btn-light p-1 copy-item-btn" data-item-text="${item.replace(/"/g, '&quot;')}" title="Copy Item">
-                            <i class="ph-copy-bold"></i>
+                            <i class="ph ph-copy-simple"></i>
                         </button>
                     `;
             listItemsContainer.appendChild(li);
